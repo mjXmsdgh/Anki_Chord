@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using myChord;
+using MyChord;
 
 public class ChordManager : MonoBehaviour
 {

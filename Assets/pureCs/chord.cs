@@ -3,25 +3,31 @@ using System.Collections.Generic;
 //using UnityEngine;
 
 
-namespace myChord
+namespace MyChord
 {
     public class Chord
     {
         public string chord_name;
 
-        public string first;
-        public string third;
-        public string fifth;
+        public List<string> key_name;
 
         public void init(string input_name,
                         string input_first,
                         string input_third,
                         string input_fifth)
         {
+            if (key_name != null)
+            {
+                key_name.Clear();
+            }
+            key_name = new List<string>();
+
             chord_name = input_name;
-            first = input_fifth;
-            third = input_third;
-            fifth = input_fifth;
+
+            key_name.Add(input_first);
+            key_name.Add(input_third);
+            key_name.Add(input_fifth);
         }
+
     }
 }

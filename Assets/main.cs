@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using myChord;
+using MyChord;
+using MySearchKey;
 
 public class main : MonoBehaviour
 {
@@ -89,7 +90,9 @@ public class main : MonoBehaviour
         }
 
         // check
-        bool ans = isCorrect();
+        search_key obj = new search_key();
+        Chord tempChord = myChordManager.GetComponent<ChordManager>().get_chord_object(problem_number);
+        bool ans = obj.isCorrect(tempChord, inputKeyList);
 
         // update GUI
         if (ans == true)
@@ -100,39 +103,5 @@ public class main : MonoBehaviour
         {
             myResultLabel.GetComponent<Text>().text = "Wring";
         }
-    }
-
-    private bool isCorrect()
-    {
-        List<int> answerList = new List<int>();
-
-        Chord tempChord = myChordManager.GetComponent<ChordManager>().get_chord_object(problem_number);
-
-        bool ans1 = findKey(tempChord.first);
-        bool ans2 = findKey(tempChord.third);
-        bool ans3 = findKey(tempChord.fifth);
-
-        if ((ans1 == true) && (ans2 == true) && (ans3 == true))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    private bool findKey(string input_key)
-    {
-        for (int i = 4; i < 6; i++)
-        {
-            string target = input_key + i.ToString();
-
-            int ans = inputKeyList.IndexOf(target);
-
-            if (ans != -1)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
