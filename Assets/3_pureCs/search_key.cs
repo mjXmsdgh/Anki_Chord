@@ -6,11 +6,11 @@ namespace MySearchKey
 {
     public class search_key
     {
-        public bool isCorrect(Chord input_chord, List<string> KeyList)
+        public bool isCorrect(Chord reference_chord, List<string> KeyList)
         {
             for (int i = 0; i < 3; i++)
             {
-                bool ans = findKey(input_chord.key_name[i], KeyList);
+                bool ans = findKey(reference_chord.key_name[i], KeyList);
 
                 if (ans == false)
                 {
@@ -20,11 +20,11 @@ namespace MySearchKey
             return true;
         }
 
-        private bool findKey(string input_key, List<string> KeyList)
+        private bool findKey(string reference_key, List<string> KeyList)
         {
             for (int i = 4; i < 6; i++)
             {
-                string target = input_key + i.ToString();
+                string target = reference_key + i.ToString();
 
                 int ans = KeyList.IndexOf(target);
 

@@ -20,6 +20,7 @@ namespace MyChord
             {
                 key_name.Clear();
             }
+            
             key_name = new List<string>();
 
             chord_name = input_name;
