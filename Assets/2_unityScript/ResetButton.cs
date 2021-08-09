@@ -20,8 +20,6 @@ public class ResetButton : MonoBehaviour
 
     public void OnClick()
     {
-        Main.GetComponent<main>().clear();
-        Main.GetComponent<main>().change_problem_number();
-        Main.GetComponent<main>().setup_problem();
+        Main.GetComponent<main>().NextProblem();
     }
 }

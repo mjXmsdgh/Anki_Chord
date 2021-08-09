@@ -32,10 +32,20 @@ public class main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            NextProblem();
+        }
     }
 
-    void init()
+    public void NextProblem()
+    {
+        clear();
+        change_problem_number();
+        setup_problem();
+    }
+
+    private void init()
     {
         inputKeyList = new List<string>();
         myObjectList = new List<GameObject>();
@@ -45,7 +55,7 @@ public class main : MonoBehaviour
         myResultLabel.GetComponent<Text>().text = "";
     }
 
-    public void clear()
+    private void clear()
     {
         // myKeyList
         inputKeyList.Clear();
@@ -64,12 +74,15 @@ public class main : MonoBehaviour
         myResultLabel.GetComponent<Text>().text = "";
     }
 
-    public void change_problem_number()
+    private void change_problem_number()
     {
-        problem_number = problem_number + 1;
+        problem_number = (int)Random.Range(0, 7);
+        Debug.Log(problem_number);
+
+        //Application.Quit();
     }
 
-    public void setup_problem()
+    private void setup_problem()
     {
         Chord tempChord = myChordManager.GetComponent<ChordManager>().get_chord_object(problem_number);
         myProblemLabel.GetComponent<Text>().text = tempChord.chord_name;
@@ -101,7 +114,7 @@ public class main : MonoBehaviour
         }
         else
         {
-            myResultLabel.GetComponent<Text>().text = "Wring";
+            myResultLabel.GetComponent<Text>().text = "Wrong";
         }
     }
 }
