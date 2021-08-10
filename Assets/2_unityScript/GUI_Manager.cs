@@ -50,7 +50,7 @@ public class GUI_Manager : MonoBehaviour
         m_ProblemLabel.GetComponent<Text>().text = "";
 
         // m_StaticLabel
-        m_StaticLabel.GetComponent<Text>().text = "";
+        //m_StaticLabel.GetComponent<Text>().text = "";
 
         m_CorrectImage.SetActive(false);
         m_WrongImage.SetActive(false);
@@ -76,5 +76,10 @@ public class GUI_Manager : MonoBehaviour
         {
             m_WrongImage.SetActive(true);
         }
+    }
+
+    public void SetStaticLabel(string input_sting)
+    {
+        m_StaticLabel.GetComponent<Text>().text=input_sting;
     }
 }

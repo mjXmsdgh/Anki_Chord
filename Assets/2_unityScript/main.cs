@@ -12,10 +12,9 @@ public class main : MonoBehaviour
     private int m_ProblemNumber;
 
     public GameObject m_ChordManager;
+    public GameObject m_GUIManager;
 
     Dictionary<string, int> m_WrongNumber;
-
-    public GameObject m_GUIManager;
 
     //-------------------------------------------------
     //-------------------------------------------------
@@ -29,7 +28,14 @@ public class main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // スペース
         if (Input.GetKeyDown(KeyCode.Space))
+        {
+            NextProblem();
+        }
+
+        // 右クリック
+        if(Input.GetMouseButtonDown(1))
         {
             NextProblem();
         }
@@ -104,5 +110,25 @@ public class main : MonoBehaviour
 
         //string temp = "A 0\nB 0\n";
         //m_StaticLabel.GetComponent<Text>().text = temp;
+
+        if (ans == false)
+        {
+            string chord_name = tempChord.chord_name;
+            m_WrongNumber[chord_name] = m_WrongNumber[chord_name] + 1;
+        }
+
+        DisplayStatics();
+    }
+
+    private void DisplayStatics()
+    {
+        string temp = "";
+
+        foreach (KeyValuePair<string, int> item in m_WrongNumber)
+        {
+            temp = temp + item.Key + " " + item.Value.ToString() + "\n";
+        }
+
+        m_GUIManager.GetComponent<GUI_Manager>().SetStaticLabel(temp);
     }
 }
