@@ -7,18 +7,25 @@ using MySearchKey;
 
 public class main : MonoBehaviour
 {
-    private List<string> inputKeyList;
+    private List<string> m_InputKeyList;
 
-    private List<GameObject> myObjectList;
+    private int m_ProblemNumber;
 
-    private int problem_number;
+    public GameObject m_ChordManager;
 
-    public GameObject myChordManager;
+    Dictionary<string, int> m_WrongNumber;
 
     //---------- GUI  -----------
-    public GameObject myProblemLabel;
 
-    public GameObject myResultLabel;
+    private List<GameObject> m_KeyObjectList;
+
+    public GameObject m_ProblemLabel;
+
+    public GameObject m_StaticLabel;
+
+    public GameObject m_CorrectImage;
+
+    public GameObject m_WrongImage;
 
     //-------------------------------------------------
     //-------------------------------------------------
@@ -47,74 +54,88 @@ public class main : MonoBehaviour
 
     private void init()
     {
-        inputKeyList = new List<string>();
-        myObjectList = new List<GameObject>();
-        problem_number = 0;
-        myChordManager.GetComponent<ChordManager>().init();
-        myProblemLabel.GetComponent<Text>().text = "";
-        myResultLabel.GetComponent<Text>().text = "";
+        m_InputKeyList = new List<string>();
+        m_KeyObjectList = new List<GameObject>();
+        m_ProblemNumber = 0;
+        m_ChordManager.GetComponent<ChordManager>().init();
+        m_ProblemLabel.GetComponent<Text>().text = "";
+        m_CorrectImage.SetActive(false);
+        m_WrongImage.SetActive(false);
+        m_WrongNumber = new Dictionary<string, int>();
+
+        m_WrongNumber.Add("C", 0);
+        m_WrongNumber.Add("D", 0);
+        m_WrongNumber.Add("E", 0);
+        m_WrongNumber.Add("F", 0);
+        m_WrongNumber.Add("G", 0);
+        m_WrongNumber.Add("A", 0);
+        m_WrongNumber.Add("B", 0);
     }
 
     private void clear()
     {
         // myKeyList
-        inputKeyList.Clear();
+        m_InputKeyList.Clear();
 
         // myObjectList;
-        for (int i = 0; i < myObjectList.Count; i++)
+        for (int i = 0; i < m_KeyObjectList.Count; i++)
         {
-            myObjectList[i].GetComponent<key_script>().restore_color();
+            m_KeyObjectList[i].GetComponent<key_script>().restore_color();
         }
-        myObjectList.Clear();
+        m_KeyObjectList.Clear();
 
         // myProblemLabel
-        myProblemLabel.GetComponent<Text>().text = "";
+        m_ProblemLabel.GetComponent<Text>().text = "";
 
-        // myResultLabel
-        myResultLabel.GetComponent<Text>().text = "";
+        m_CorrectImage.SetActive(false);
+        m_WrongImage.SetActive(false);
     }
 
     private void change_problem_number()
     {
-        problem_number = (int)Random.Range(0, 7);
-        Debug.Log(problem_number);
+        m_ProblemNumber = (int)Random.Range(0, 7);
+        Debug.Log(m_ProblemNumber);
 
         //Application.Quit();
     }
 
     private void setup_problem()
     {
-        Chord tempChord = myChordManager.GetComponent<ChordManager>().get_chord_object(problem_number);
-        myProblemLabel.GetComponent<Text>().text = tempChord.chord_name;
+        Chord tempChord = m_ChordManager.GetComponent<ChordManager>().get_chord_object(m_ProblemNumber);
+        m_ProblemLabel.GetComponent<Text>().text = tempChord.chord_name;
     }
 
     public void Notify(GameObject KeyObject, string inputKey)
     {
         // add key object
-        myObjectList.Add(KeyObject);
+        m_KeyObjectList.Add(KeyObject);
 
         // add input key
-        inputKeyList.Add(inputKey);
+        m_InputKeyList.Add(inputKey);
 
         // check number
-        if (inputKeyList.Count != 3)
+        if (m_InputKeyList.Count != 3)
         {
             return;
         }
 
         // check
         search_key obj = new search_key();
-        Chord tempChord = myChordManager.GetComponent<ChordManager>().get_chord_object(problem_number);
-        bool ans = obj.isCorrect(tempChord, inputKeyList);
+        Chord tempChord = m_ChordManager.GetComponent<ChordManager>().get_chord_object(m_ProblemNumber);
+        bool ans = obj.isCorrect(tempChord, m_InputKeyList);
 
         // update GUI
         if (ans == true)
         {
-            myResultLabel.GetComponent<Text>().text = "Correct";
+            m_CorrectImage.SetActive(true);
         }
         else
         {
-            myResultLabel.GetComponent<Text>().text = "Wrong";
+            m_WrongImage.SetActive(true);
         }
+
+        string temp = "A 0\nB 0\n";
+
+        m_StaticLabel.GetComponent<Text>().text = temp;
     }
 }
